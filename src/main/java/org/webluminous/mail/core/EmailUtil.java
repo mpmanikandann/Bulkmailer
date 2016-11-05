@@ -21,8 +21,6 @@ import java.util.Properties;
  */
 public class EmailUtil {
 
-  private static final String MAIL_PROPERTY = "Email.properties";
-  private static final String PROP_BCC_EMAIL = "BCCEMAIL";
   private Logger OUT = Logger.getLogger(this.getClass());
   private static Properties handlerProps = null;
   private Session session = null;
@@ -50,14 +48,14 @@ public class EmailUtil {
         // -- Set the FROM and TO fields --
         msg.setFrom(new InternetAddress(from));
         // bcc the 'bcc' email address all emails
-        if (handlerProps.getProperty(PROP_BCC_EMAIL) != null) {
-          msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(handlerProps.getProperty(PROP_BCC_EMAIL), false));
+        if (handlerProps.getProperty(Static.PROP_BCC_EMAIL) != null) {
+          msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(handlerProps.getProperty(Static.PROP_BCC_EMAIL), false));
         }
         // -- Set the subject and body text --
-        msg.setSubject(subject, "iso-8859-1");
+        msg.setSubject(subject, Static.CHARSET);
         msg.setText(body);
         // -- Set some other header information --
-        msg.setHeader("X-Mailer", "AWE-Direct-Mailer");
+        msg.setHeader(Static.X_MAILER, Static.AWE_DIRECT_MAILER);
         msg.setSentDate(new Date());
         // -- Send the message --
         MimeMultipart multipart = new MimeMultipart("related");
@@ -65,9 +63,9 @@ public class EmailUtil {
         String htmlText = body;
         //if html message
         if (html) {
-          messageBodyPart.setContent(htmlText, "text/html");
+          messageBodyPart.setContent(htmlText, Static.HTML_CONTENT_TYPE);
           multipart.addBodyPart(messageBodyPart);
-          msg.setDataHandler(new DataHandler(htmlText, "text/html"));
+          msg.setDataHandler(new DataHandler(htmlText, Static.HTML_CONTENT_TYPE));
         }
         //send image as attachment
         if (fileUrl != null) {
@@ -76,7 +74,7 @@ public class EmailUtil {
           URLDataSource ds = new URLDataSource(url);
           messageBodyPart.setDataHandler(new DataHandler(ds));
           if (image) {
-            messageBodyPart.setHeader("Content-ID", "<image>");
+            messageBodyPart.setHeader(Static.IMAGE_CONTENT_ID, Static.IMAGE_TAG);
             multipart.addBodyPart(messageBodyPart);
           }
           BodyPart imgPart = new MimeBodyPart();
@@ -84,7 +82,7 @@ public class EmailUtil {
           URLDataSource ds1 = new URLDataSource(imageFileURL);
           imgPart.setDataHandler(new DataHandler(ds1));
           if (image) {
-            imgPart.setHeader("Content-ID", "<image>");
+            imgPart.setHeader(Static.IMAGE_CONTENT_ID, Static.IMAGE_TAG);
           }
           imgPart.setFileName("ATT.png");
           multipart.addBodyPart(imgPart);
@@ -104,7 +102,7 @@ public class EmailUtil {
     try {
       if (handlerProps == null) {
         handlerProps = new Properties();
-        handlerProps.load(ClassLoader.getSystemResourceAsStream(MAIL_PROPERTY));
+        handlerProps.load(ClassLoader.getSystemResourceAsStream(Static.MAIL_PROPERTY));
       }
     } catch (IOException e) {
       OUT.error("Exception on reading the Property file");
