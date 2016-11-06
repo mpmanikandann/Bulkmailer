@@ -1,0 +1,14 @@
+**/.DS_Store
+**/target/*
+**/*.iml
+**/*.ipr
+**/*.iws
+.idea
+out/
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+**/overlays/*
+**/rebel-remote.xml
+**/rebel.xml

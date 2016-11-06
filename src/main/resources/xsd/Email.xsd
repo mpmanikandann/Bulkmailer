@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://webluminous.com/xsd/Email.xsd"
+    xmlns="http://webluminous.com/xsd/Email.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="EMail" type="ct_EMail"/>
+    <xs:complexType name="ct_EMail">
+        <xs:sequence>
+            <xs:element name="Header" type="ct_Header"/>
+            <xs:element name="Contact" type="ct_Contact"/>
+            <xs:sequence>
+                <xs:element name="Maildata" type="ct_maildata"/>
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="xslUrl" type="xs:string" use="required"/>
+        <xs:attribute name="subject" type="xs:string" use="required"/>
+        <xs:attribute name="from" type="xs:string" use="required"/>
+        <xs:attribute name="html" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="ct_Contact">
+        <xs:attribute name="firstName" type="xs:string" use="required"/>
+        <xs:attribute name="lastName" type="xs:string" use="required"/>
+        <xs:attribute name="email" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ct_maildata">
+        <xs:attribute name="contentname" type="xs:string"/>
+        <xs:attribute name="contentvalue" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="ct_Header">
+        <xs:sequence>
+            <xs:element name="Notification" type="ct_NotificationItem"/>
+        </xs:sequence>
+        <xs:attribute name="priority" type="xs:string" use="optional"/>
+        <xs:attribute name="timeStamp" type="xs:dateTime" use="required"/>
+        <xs:attribute name="authTok" type="xs:string" use="required"/>
+        <xs:attribute name="logId" type="xs:string" use="optional"/>
+        <xs:attribute name="userID" type="xs:string" use="optional"/>
+        <xs:attribute name="asyncResponse" type="xs:boolean" use="optional"/>
+        <xs:attribute name="consecutiveNumbers" type="xs:boolean" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="ct_NotificationItem">
+        <xs:attribute name="notificationEmail" type="xs:string" use="optional"/>
+    </xs:complexType>
+</xs:schema>
