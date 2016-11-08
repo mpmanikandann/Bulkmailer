@@ -149,7 +149,7 @@ public class EmailUtil {
   }
 
   /**
-   * @param reader
+   * @param reader Input Reader Objec which contains Inputs required for trigering email
    */
   public void sendBulkemails(InputReader reader) {
     Session session = null;

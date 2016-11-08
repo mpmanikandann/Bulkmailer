@@ -79,8 +79,8 @@ public class InputReader {
    *
    * @return Template Object
    *
-   * @throws FileNotFoundException
-   * @throws TransformerConfigurationException
+   * @throws FileNotFoundException FileNotFoundException is thrown when xslt is not available
+   * @throws TransformerConfigurationException TransformerConfiguration exception is thrown at instantation Transformers
    */
   private Templates setMailtemplate() throws FileNotFoundException, TransformerConfigurationException {
     mailtemplate = TransformerFactory.newInstance().newTemplates(new StreamSource(new FileReader(templatelocation)));

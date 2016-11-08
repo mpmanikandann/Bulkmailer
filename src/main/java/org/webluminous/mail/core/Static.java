@@ -22,4 +22,12 @@ public class Static {
   public static final String CSV_FILE_SEPERATOR = ",";
   public static final String BLANK_VALUE = "BLANK";
   public static final String EMAIL_REGEX = "^(.+)@(.+)$";
+  public static final String GUI_TITLE = "BulkEmailer";
+  public static final String GUI_SELECT_THE_CSV_FILE = "Select the csv file";
+  public static final String CHOOSE_BUTTON_TEXT = "Choose";
+  public static final String GUI_EMAIL_TEMPLATE_LABEL = "Select the email template";
+  public static final String ERR_ON_INPUT_FILE_VALIDATION="Either CSV or Template is Not load properly";
+  public static final String VALIDATION_MESSAGE="Problem on Validation";
+
+
 }
