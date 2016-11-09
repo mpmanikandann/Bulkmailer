@@ -38,9 +38,10 @@ public class InputReader {
    * Initalize the file location by reading the system property and
    * reads the file from the given location.
    */
-  public InputReader() {
+  public InputReader() throws FileNotFoundException, TransformerConfigurationException {
     this.csvlocation = System.getProperty(Static.SYSYEM_PROPERTY_FILE);
     this.templatelocation = System.getProperty(Static.SYSTEM_PROPERTY_TEMPLATE_FILE);
+    init();
   }
 
   /**
@@ -49,7 +50,7 @@ public class InputReader {
    * @param csvlocation Csv file location which contains mail d and otherr dynamic fields
    * @param templatelocation Xsl file location
    */
-  public InputReader(String csvlocation, String templatelocation) {
+  public InputReader(String csvlocation, String templatelocation) throws FileNotFoundException, TransformerConfigurationException {
     this.csvlocation = csvlocation;
     this.templatelocation = templatelocation;
     init();
@@ -59,18 +60,19 @@ public class InputReader {
    * In this method input csv file is read and contents are added to the list
    * filecontents and sets first row as attribute for mapping the dynamic values in xsl
    */
-  private void init() {
+  private void init() throws FileNotFoundException ,TransformerConfigurationException{
     try (Scanner filesscanner = new Scanner(new File(csvlocation))) {
-      while (filesscanner.hasNext()) {
-        filecontent.add(filesscanner.next());
-      }
-      if (!filecontent.isEmpty()) {
-        this.header = filecontent.get(0);
-        filecontent.remove(0);
-      }
-      setMailtemplate();
+    while (filesscanner.hasNext()) {
+      filecontent.add(filesscanner.next());
+    }
+    if (!filecontent.isEmpty()) {
+      this.header = filecontent.get(0);
+      filecontent.remove(0);
+    }
+    setMailtemplate();
     } catch (FileNotFoundException | TransformerConfigurationException e) {
       out.error("Exception occured while reading the file", e);
+      throw e;
     }
   }
 
