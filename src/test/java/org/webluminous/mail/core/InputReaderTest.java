@@ -54,12 +54,12 @@ public class InputReaderTest {
   @Test
   public void testcsvfilenotfoundexception() throws Exception {
     exception.expect(FileNotFoundException.class);
-    InputReader reader = new InputReader("../inputcsvfile.csv","../inputtemplate.xsl");
+    InputReader reader = new InputReader("../inputcsvfile.csv", "../inputtemplate.xsl");
   }
 
   @Test
   public void testxslfilenotfoundexception() throws Exception {
     exception.expect(FileNotFoundException.class);
-    InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(),"../inputtemplate.xsl");
+    InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(), "../inputtemplate.xsl");
   }
 }
