@@ -90,7 +90,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <maven.test.skip>true</maven.test.skip>
+        <maven.test.skip>false</maven.test.skip>
       </properties>
       <build>
         <!--Filtering the contents from resource folder-->
@@ -160,6 +160,13 @@
             <configuration>
               <source>1.8</source>
               <target>1.8</target>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <argLine>-Xms256m -Xmx512m</argLine>
             </configuration>
           </plugin>
         </plugins>
