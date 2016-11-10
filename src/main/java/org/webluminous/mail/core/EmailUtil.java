@@ -141,7 +141,7 @@ public class EmailUtil {
      */
     private Session getSession() {
         if (session == null) {
-            session = Session.getDefaultInstance(mailproperties, null);
+            session = Session.getInstance(mailproperties, null);
         }
         return session;
     }
@@ -155,7 +155,8 @@ public class EmailUtil {
         MimeMessage message;
         try {
             mailsession = getSession();
-            transport = mailsession.getTransport();
+            transport = mailsession.getTransport(session.getProvider("smtp"));
+            transport.connect();
             for (String content : reader.getFilecontent()) {
                 EMailDocument document = generateTransformXml(reader.getHeader(), content);
                 message = getMessage(reader.getFromaddress(), reader.getSubject(), doTransform(document.xmlText(), InputReader.getMailtemplate()), true, true, null, false);
@@ -202,7 +203,7 @@ public class EmailUtil {
      * @throws IOException          throws on rading xslt
      * @throws TransformerException throws on any error in xslt
      */
-    public String doTransform(String xml, Templates templates) throws JDOMException, TransformerException {
+    private String doTransform(String xml, Templates templates) throws JDOMException, TransformerException {
         try {
             if (xml != null) {
                 SAXBuilder builder = new SAXBuilder(false);
