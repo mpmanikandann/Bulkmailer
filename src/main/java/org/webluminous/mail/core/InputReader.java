@@ -25,116 +25,115 @@ import java.util.Scanner;
  */
 public class InputReader {
 
-  private Logger out = Logger.getLogger(InputReader.class);
-  private String csvlocation = null;
-  private String templatelocation = null;
-  private String header = null;
-  private List<String> filecontent = new LinkedList<>();
-  private static Templates mailtemplate = null;
-  private String fromaddress;
-  private String subject;
+    private static final Logger LOGGER = Logger.getLogger(InputReader.class);
+    private String csvlocation = null;
+    private String templatelocation = null;
+    private String header = null;
+    private List<String> filecontent = new LinkedList<>();
+    private static Templates mailtemplate = null;
+    private String fromaddress;
+    private String subject;
 
-  /**
-   * Initalize the file location by reading the system property and
-   * reads the file from the given location.
-   */
-  public InputReader() throws FileNotFoundException, TransformerConfigurationException {
-    this.csvlocation = System.getProperty(Static.SYSYEM_PROPERTY_FILE);
-    this.templatelocation = System.getProperty(Static.SYSTEM_PROPERTY_TEMPLATE_FILE);
-    init();
-  }
-
-  /**
-   * Initalize the file location and reads the file from the given location.
-   *
-   * @param csvlocation Csv file location which contains mail d and otherr dynamic fields
-   * @param templatelocation Xsl file location
-   */
-  public InputReader(String csvlocation, String templatelocation) throws FileNotFoundException, TransformerConfigurationException {
-    this.csvlocation = csvlocation;
-    this.templatelocation = templatelocation;
-    init();
-  }
-
-  /**
-   * In this method input csv file is read and contents are added to the list
-   * filecontents and sets first row as attribute for mapping the dynamic values in xsl
-   */
-  private void init() throws FileNotFoundException ,TransformerConfigurationException{
-    try (Scanner filesscanner = new Scanner(new File(csvlocation))) {
-    while (filesscanner.hasNext()) {
-      filecontent.add(filesscanner.next());
+    /**
+     * Initalize the file location by reading the system property and
+     * reads the file from the given location.
+     */
+    public InputReader() throws FileNotFoundException, TransformerConfigurationException {
+        this.csvlocation = System.getProperty(Static.SYSYEM_PROPERTY_FILE);
+        this.templatelocation = System.getProperty(Static.SYSTEM_PROPERTY_TEMPLATE_FILE);
+        init();
     }
-    if (!filecontent.isEmpty()) {
-      this.header = filecontent.get(0);
-      filecontent.remove(0);
+
+    /**
+     * Initalize the file location and reads the file from the given location.
+     *
+     * @param csvlocation      Csv file location which contains mail d and otherr dynamic fields
+     * @param templatelocation Xsl file location
+     */
+    public InputReader(String csvlocation, String templatelocation) throws FileNotFoundException, TransformerConfigurationException {
+        this.csvlocation = csvlocation;
+        this.templatelocation = templatelocation;
+        init();
     }
-    setMailtemplate();
-    } catch (FileNotFoundException | TransformerConfigurationException e) {
-      out.error("Exception occured while reading the file", e);
-      throw e;
+
+    /**
+     * In this method input csv file is read and contents are added to the list
+     * filecontents and sets first row as attribute for mapping the dynamic values in xsl
+     */
+    private void init() throws FileNotFoundException, TransformerConfigurationException {
+        try (Scanner filesscanner = new Scanner(new File(csvlocation))) {
+            while (filesscanner.hasNext()) {
+                filecontent.add(filesscanner.next());
+            }
+            if (!filecontent.isEmpty()) {
+                this.header = filecontent.get(0);
+                filecontent.remove(0);
+            }
+            setMailtemplate();
+        } catch (FileNotFoundException | TransformerConfigurationException e) {
+            LOGGER.error("Exception occured while reading the file", e);
+            throw e;
+        }
     }
-  }
 
-  /**
-   * Initalizling email template
-   *
-   * @return Template Object
-   *
-   * @throws FileNotFoundException FileNotFoundException is thrown when xslt is not available
-   * @throws TransformerConfigurationException TransformerConfiguration exception is thrown at instantation Transformers
-   */
-  private Templates setMailtemplate() throws FileNotFoundException, TransformerConfigurationException {
-    mailtemplate = TransformerFactory.newInstance().newTemplates(new StreamSource(new FileReader(templatelocation)));
-    return mailtemplate;
-  }
+    /**
+     * Initalizling email template
+     *
+     * @return Template Object
+     * @throws FileNotFoundException             FileNotFoundException is thrown when xslt is not available
+     * @throws TransformerConfigurationException TransformerConfiguration exception is thrown at instantation Transformers
+     */
+    private synchronized Templates setMailtemplate() throws FileNotFoundException, TransformerConfigurationException {
+        mailtemplate = TransformerFactory.newInstance().newTemplates(new StreamSource(new FileReader(templatelocation)));
+        return mailtemplate;
+    }
 
-  /**
-   * @return File contents in list
-   */
-  public List<String> getFilecontent() {
-    return filecontent;
-  }
+    /**
+     * @return File contents in list
+     */
+    public List<String> getFilecontent() {
+        return filecontent;
+    }
 
-  /**
-   * @return Templates
-   */
-  public static Templates getMailtemplate() {
-    return mailtemplate;
-  }
+    /**
+     * @return Templates
+     */
+    public static Templates getMailtemplate() {
+        return mailtemplate;
+    }
 
-  /**
-   * @return Header names from csv file
-   */
-  public String getHeader() {
-    return header;
-  }
+    /**
+     * @return Header names from csv file
+     */
+    public String getHeader() {
+        return header;
+    }
 
-  /**
-   * @return fromaddress
-   */
-  public String getFromaddress() {
-    return fromaddress;
-  }
+    /**
+     * @return fromaddress
+     */
+    public String getFromaddress() {
+        return fromaddress;
+    }
 
-  /**
-   * @param fromaddress sets from address
-   */
-  public void setFromaddress(String fromaddress) {
-    this.fromaddress = fromaddress;
-  }
+    /**
+     * @param fromaddress sets from address
+     */
+    public void setFromaddress(String fromaddress) {
+        this.fromaddress = fromaddress;
+    }
 
-  /**
-   * @return Subject
-   */
-  public String getSubject() {
-    return subject;
-  }
+    /**
+     * @return Subject
+     */
+    public String getSubject() {
+        return subject;
+    }
 
-  /**
-   * @param subject sets the subjects of email
-   */
-  public void setSubject(String subject) {
-    this.subject = subject;
-  }
+    /**
+     * @param subject sets the subjects of email
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 }

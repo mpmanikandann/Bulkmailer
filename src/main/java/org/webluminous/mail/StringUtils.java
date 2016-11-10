@@ -9,12 +9,15 @@ package org.webluminous.mail;
  */
 public class StringUtils {
 
-  /**
-   * @param s Inout string
-   *
-   * @return returns true if its not null else false
-   */
-  public static boolean isNotNull(String s) {
-    return s != null && !"".equals(s);
-  }
+    private StringUtils() {
+
+    }
+
+    /**
+     * @param s Inout string
+     * @return returns true if its not null else false
+     */
+    public static boolean isNotNull(String s) {
+        return s != null && !"".equals(s);
+    }
 }
