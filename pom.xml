@@ -224,7 +224,7 @@
                 <sonar.language>java</sonar.language>
                 <sonar.scm.disabled>true</sonar.scm.disabled>
                 <surefireReportPlugin.aggregate>true</surefireReportPlugin.aggregate>
-                <sonar.exclusions>**/*GUI.java,**/Static.java</sonar.exclusions>
+                <sonar.exclusions>**/*GUI.java,**/Static.java,**/*Test.java</sonar.exclusions>
             </properties>
             <build>
                 <!--Plugin Management-->

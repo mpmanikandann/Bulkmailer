@@ -10,7 +10,6 @@ package org.webluminous.mail;
 public class StringUtils {
 
     private StringUtils() {
-
     }
 
     /**

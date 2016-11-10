@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+import javax.xml.transform.TransformerConfigurationException;
 import java.io.FileNotFoundException;
 
 /**
@@ -62,11 +63,18 @@ public class InputReaderTest {
     }
 
     @Test
-    public void testcsvfielwithoutvalue() throws Exception {
+    public void testcsvfilewithoutvalue() throws Exception {
         InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvwithoutvalues.csv").getPath(), ClassLoader.getSystemResource("inputtemplate.xsl").getPath());
         reader.setFromaddress("test@test.com");
         reader.setSubject("test mail");
         Assert.assertTrue("CSV File contents", reader.getFilecontent().size() == 0);
+    }
+
+    @Test
+    public void testwithoutpropertemplatevalue() throws Exception {
+        exception.expect(TransformerConfigurationException.class);
+        InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(), ClassLoader.getSystemResource("inputcsvwithoutvalues.csv").getPath());
+
     }
 
 }
