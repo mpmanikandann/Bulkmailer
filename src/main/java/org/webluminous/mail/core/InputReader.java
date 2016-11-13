@@ -33,6 +33,7 @@ public class InputReader {
     private static Templates mailtemplate = null;
     private String fromaddress;
     private String subject;
+    private String logourl;
 
     /**
      * Initalize the file location by reading the system property and
@@ -135,5 +136,21 @@ public class InputReader {
      */
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    /**
+     *
+     * @return gets the Logo url
+     */
+    public String getLogourl() {
+        return logourl;
+    }
+
+    /**
+     *
+      * @param logourl pass the file location for image to be send
+     */
+    public void setLogourl(String logourl) {
+        this.logourl = logourl;
     }
 }

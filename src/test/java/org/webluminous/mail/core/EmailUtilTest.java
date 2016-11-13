@@ -18,6 +18,17 @@ public class EmailUtilTest {
         InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(), ClassLoader.getSystemResource("inputtemplate.xsl").getPath());
         reader.setFromaddress("test@test.com");
         reader.setSubject("test mail");
+        reader.setLogourl(ClassLoader.getSystemResource("logo.png").toURI().toString());
+        EmailUtil emailUtil = new EmailUtil();
+        emailUtil.sendBulkemails(reader);
+    }
+
+
+    @Test
+    public void testEmailwithoutlogo() throws Exception {
+        InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(), ClassLoader.getSystemResource("inputtemplate.xsl").getPath());
+        reader.setFromaddress("test@test.com");
+        reader.setSubject("test mail");
         EmailUtil emailUtil = new EmailUtil();
         emailUtil.sendBulkemails(reader);
     }

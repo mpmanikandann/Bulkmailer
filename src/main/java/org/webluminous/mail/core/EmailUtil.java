@@ -159,7 +159,7 @@ public class EmailUtil {
             transport.connect();
             for (String content : reader.getFilecontent()) {
                 EMailDocument document = generateTransformXml(reader.getHeader(), content);
-                message = getMessage(reader.getFromaddress(), reader.getSubject(), doTransform(document.xmlText(), InputReader.getMailtemplate()), true, true, null, false);
+                message = getMessage(reader.getFromaddress(), reader.getSubject(), doTransform(document.xmlText(), InputReader.getMailtemplate()), true, true, reader.getLogourl(), false);
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(document.getEMail().getContact().getEmail(), false));
                 message.saveChanges();
                 transport.sendMessage(message, message.getAllRecipients());

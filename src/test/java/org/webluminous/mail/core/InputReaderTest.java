@@ -36,6 +36,7 @@ public class InputReaderTest {
         Assert.assertTrue("Header Content", reader.getHeader() != null);
         Assert.assertEquals("test@test.com", reader.getFromaddress());
         Assert.assertEquals("test mail", reader.getSubject());
+        Assert.assertTrue("LogoUrl",reader.getLogourl()==null);
     }
 
     @Test
@@ -43,11 +44,13 @@ public class InputReaderTest {
         InputReader reader = new InputReader(ClassLoader.getSystemResource("inputcsvfile.csv").getPath(), ClassLoader.getSystemResource("inputtemplate.xsl").getPath());
         reader.setFromaddress("test@test.com");
         reader.setSubject("test mail");
+        reader.setLogourl(ClassLoader.getSystemResource("logo.png").getPath());
         Assert.assertTrue("CSV File contents", reader.getFilecontent().size() > 0);
         Assert.assertTrue("Template Contents", InputReader.getMailtemplate() != null);
         Assert.assertTrue("Header Content", reader.getHeader() != null);
         Assert.assertEquals("test@test.com", reader.getFromaddress());
         Assert.assertEquals("test mail", reader.getSubject());
+        Assert.assertTrue("LogoUrl",reader.getLogourl()!=null);
     }
 
     @Test
