@@ -131,7 +131,7 @@
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
-                    <version>1.0.4</version>
+                    <version>1.4.5</version>
                     <configuration>
                         <externalReport>false</externalReport>
                     </configuration>
