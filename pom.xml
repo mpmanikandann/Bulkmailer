@@ -42,7 +42,7 @@
         <xmlbeans.version>3.0.0</xmlbeans.version>
         <xmlbeans.plugin.version>2.3.3</xmlbeans.plugin.version>
         <compiler.plugin.version>3.10.1</compiler.plugin.version>
-        <assembly.plugin.version>2.2</assembly.plugin.version>
+        <assembly.plugin.version>2.6</assembly.plugin.version>
         <mavenSurefirePluginVersion>2.22.2</mavenSurefirePluginVersion>
     </properties>
     <!--Project Dependency-->
